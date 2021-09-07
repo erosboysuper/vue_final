@@ -32,6 +32,10 @@
       v-model="listQuery.budgetLowerEqual"
       placeholder="budgetLowerEqual"
     />
+    <div class="" v-for="platform in platforms" :key="platform">
+      <label for="">{{ platform }}</label>
+      <input type="checkbox" :name="platform" id="" @click="changPlatform" />
+    </div>
     <ul class="pagination-block">
       <li v-for="showData in paginationStore" :key="showData.title">
         <div
@@ -55,11 +59,12 @@ import { defineComponent } from "vue";
 import tasksListController from "@/components/tasks/tasks.search";
 import useTasksStore from "@/store/tasks";
 import usePagination from "@/store/pagination";
+import { platforms } from "@/store/global";
 
 export default defineComponent({
   name: "TasksSearch",
   setup() {
-    const { getLists, init, search, listQuery } = tasksListController();
+    const { getLists, init, search, listQuery, changPlatform } = tasksListController();
     const { showListData } = useTasksStore();
     const { paginationStore } = usePagination();
     init();
@@ -67,10 +72,12 @@ export default defineComponent({
     return {
       init,
       listQuery,
+      changPlatform,
       getLists,
       search,
       showListData,
       paginationStore,
+      platforms,
     };
   },
 });
